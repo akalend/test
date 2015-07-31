@@ -25,7 +25,7 @@ function capcha( $salt )
      imageline($image, 0, $height/2, $width, $height/2, $grey); 
      imageline($image, $width/2, 0, $width/2, $height, $grey); 
     header("Content-Type: image/jpeg"); 
-    // header("Cache-Control: no-cache, must-revalidate");
+    header("Cache-Control: no-cache, must-revalidate");
     ImageJpeg($image);
     ImageDestroy($image);
 
