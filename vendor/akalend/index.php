@@ -8,20 +8,61 @@
  *
  * If you are using Composer, you can skip this step.
  */
+
+
+ini_set('display_errors', 1);
+ini_set('html_errors', 0);
+
 require '../slim/slim/Slim/Slim.php';
+
+require 'config.php';
 
 \Slim\Slim::registerAutoloader();
 
-$app = new \Slim\Slim();
+$app = new \Slim\Slim($config);
 
+
+$level= \Slim\Log::DEBUG;
+
+$app->config('debug_mode', true);
+
+
+$app->notFound(function (){
+    echo 'route notFound',PHP_EOL;
+    exit;
+});
+
+if ( $app->config('security')){
+    $apiKey = $app->request->headers->get("X-API-KEY");
+    if (!$apiKey){ 
+        echo 'api key absent';
+        exit;
+    };
+    if ($apiKey != $app->config('apikey')){
+        echo 'api key error';
+        exit;
+    }
+    
+}
 
 $app->get(
     '/api/get',
     function () {
-
-        echo "*****<br>";
+        $app->response->write('********');
+        return;        
     }
 );
+
+$app->get(
+    '/api/capcha',
+    function ()  use($app) {
+        require 'capcha.php';
+
+        capcha($app->config('salt'));
+        exit();
+    }
+);
+
 
 
 $app->get(

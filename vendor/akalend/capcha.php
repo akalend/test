@@ -1,6 +1,9 @@
 <?php
-    $id = rand(0,9999);
-    $md5_hash = md5($id + ".12er"); 
+
+function capcha( $salt )
+{
+        
+    $md5_hash = md5(rand(0,9999) ); 
     $security_code = substr($md5_hash, 25, 5); 
     $enc=md5($security_code);
 
@@ -24,4 +27,5 @@
     // header("Cache-Control: no-cache, must-revalidate");
     ImageJpeg($image);
     ImageDestroy($image);
-   
+
+   }
