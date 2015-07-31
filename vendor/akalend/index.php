@@ -96,15 +96,6 @@ $app->get(
                 </p>
             </section>
 
-            <section style="padding-bottom: 20px">
-                <img src="/api/capcha/?123">
-                <form action="/api/check" method="post">
-                   <input name="code">
-                   <input type="submit" >
-                </p>
-            </section>
-
-
         </body>
     </html>
 EOT;
