@@ -9,7 +9,8 @@
  * If you are using Composer, you can skip this step.
  */
 
-
+session_cache_limiter(false);
+session_start();
 ini_set('display_errors', 1);
 ini_set('html_errors', 0);
 
@@ -54,7 +55,7 @@ $app->get(
 );
 
 $app->get(
-    '/api/capcha',
+    '/api/capcha/',
     function ()  use($app) {
         require 'capcha.php';
 
@@ -63,6 +64,18 @@ $app->get(
     }
 );
 
+
+$app->post(
+    '/api/check',
+    function() use($app) {
+
+    
+    if( $_SESSION['count'] === md5( $app->request->post('code') . $app->config('salt')) ) {
+        $app->response->write("OK");
+    } else
+        $app->response->redirect('/api/info');
+    }
+);
 
 
 $app->get(
@@ -82,6 +95,15 @@ $app->get(
                    text info
                 </p>
             </section>
+
+            <section style="padding-bottom: 20px">
+                <img src="/api/capcha/?123">
+                <form action="/api/check" method="post">
+                   <input name="code">
+                   <input type="submit" >
+                </p>
+            </section>
+
 
         </body>
     </html>

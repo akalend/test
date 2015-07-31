@@ -2,10 +2,11 @@
 
 function capcha( $salt )
 {
-        
+    
+    srand(time());
     $md5_hash = md5(rand(0,9999) ); 
     $security_code = substr($md5_hash, 25, 5); 
-    $enc=md5($security_code);
+    $enc=md5($security_code . $salt);
 
     $_SESSION['count'] = $enc;
     $secure = $_SESSION['count'];
