@@ -1,0 +1,6 @@
+{
+   "name": "farhad-m/capcha",
+   "require": {
+      "slim/slim": "~2.0"
+   }
+}
